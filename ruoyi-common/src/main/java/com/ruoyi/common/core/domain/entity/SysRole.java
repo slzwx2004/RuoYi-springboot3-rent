@@ -1,7 +1,7 @@
 package com.ruoyi.common.core.domain.entity;
 
 import java.util.Set;
-import jakarta.validation.constraints.*;
+import javax.validation.constraints.*;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;

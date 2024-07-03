@@ -1,7 +1,7 @@
 package com.ruoyi.framework.shiro.web.filter.sync;
 
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.ServletResponse;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import org.apache.shiro.web.filter.PathMatchingFilter;
 import com.ruoyi.common.constant.ShiroConstants;
 import com.ruoyi.framework.shiro.session.OnlineSession;

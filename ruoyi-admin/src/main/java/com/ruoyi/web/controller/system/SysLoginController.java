@@ -1,8 +1,9 @@
 package com.ruoyi.web.controller.system;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import com.ruoyi.common.utils.security.RsaUtils;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -74,28 +75,27 @@ public class SysLoginController extends BaseController
 //            return error(msg);
 //        }
 //    }
-
-    @PostMapping("/login")
-    @ResponseBody
-    public AjaxResult ajaxLogin(String username, String password, Boolean rememberMe)
+@PostMapping("/login")
+@ResponseBody
+public AjaxResult ajaxLogin(String username, String password, Boolean rememberMe)
+{
+    try
     {
-        try
-        {
-            UsernamePasswordToken token = new UsernamePasswordToken(username, RsaUtils.decryptByPrivateKey(password), rememberMe);
-            Subject subject = SecurityUtils.getSubject();
-            subject.login(token);
-            return success();
-        }
-        catch (Exception e)
-        {
-            String msg = "用户或密码错误";
-            if (StringUtils.isNotEmpty(e.getMessage()))
-            {
-                msg = e.getMessage();
-            }
-            return error(msg);
-        }
+        UsernamePasswordToken token = new UsernamePasswordToken(username, RsaUtils.decryptByPrivateKey(password), rememberMe);
+        Subject subject = SecurityUtils.getSubject();
+        subject.login(token);
+        return success();
     }
+    catch (Exception e)
+    {
+        String msg = "用户或密码错误";
+        if (StringUtils.isNotEmpty(e.getMessage()))
+        {
+            msg = e.getMessage();
+        }
+        return error(msg);
+    }
+}
 
     @GetMapping("/unauth")
     public String unauth()
