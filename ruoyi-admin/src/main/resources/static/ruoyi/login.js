@@ -1,3 +1,14 @@
+// 密钥对生成 http://web.chacuo.net/netrsakeypair
+
+const publicKey = 'MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAKoR8mX0rGKLqzcWmOzbfj64K8ZIgOdH\n' +
+    'nzkXSOVOZbFu/TJhZ7rFAN+eaGkl3C4buccQd/EjEsj9ir7ijT7h96MCAwEAAQ=='
+
+// 加密
+function encrypt(txt) {
+    const encryptor = new JSEncrypt()
+    encryptor.setPublicKey(publicKey) // 设置公钥
+    return encryptor.encrypt(txt) // 对数据进行加密
+}
 
 $(function() {
     validateKickout();
@@ -22,7 +33,7 @@ function login() {
         url: ctx + "login",
         data: {
             "username": username,
-            "password": password,
+            "password": encrypt(password),
             "validateCode": validateCode,
             "rememberMe": rememberMe
         },
@@ -70,23 +81,23 @@ function validateRule() {
 function validateKickout() {
     if (getParam("kickout") == 1) {
         layer.alert("<font color='red'>您已在别处登录，请您修改密码或重新登录</font>", {
-            icon: 0,
-            title: "系统提示"
-        },
-        function(index) {
-            //关闭弹窗
-            layer.close(index);
-            if (top != self) {
-                top.location = self.location;
-            } else {
-                var url = location.search;
-                if (url) {
-                    var oldUrl = window.location.href;
-                    var newUrl = oldUrl.substring(0, oldUrl.indexOf('?'));
-                    self.location = newUrl;
+                icon: 0,
+                title: "系统提示"
+            },
+            function(index) {
+                //关闭弹窗
+                layer.close(index);
+                if (top != self) {
+                    top.location = self.location;
+                } else {
+                    var url = location.search;
+                    if (url) {
+                        var oldUrl = window.location.href;
+                        var newUrl = oldUrl.substring(0, oldUrl.indexOf('?'));
+                        self.location = newUrl;
+                    }
                 }
-            }
-        });
+            });
     }
 }
 

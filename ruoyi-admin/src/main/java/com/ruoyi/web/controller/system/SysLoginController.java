@@ -1,5 +1,6 @@
 package com.ruoyi.web.controller.system;
 
+import com.ruoyi.common.utils.security.RsaUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.shiro.SecurityUtils;
@@ -52,18 +53,40 @@ public class SysLoginController extends BaseController
         return "login";
     }
 
+//    @PostMapping("/login")
+//    @ResponseBody
+//    public AjaxResult ajaxLogin(String username, String password, Boolean rememberMe)
+//    {
+//        UsernamePasswordToken token = new UsernamePasswordToken(username, password, rememberMe);
+//        Subject subject = SecurityUtils.getSubject();
+//        try
+//        {
+//            subject.login(token);
+//            return success();
+//        }
+//        catch (AuthenticationException e)
+//        {
+//            String msg = "用户或密码错误";
+//            if (StringUtils.isNotEmpty(e.getMessage()))
+//            {
+//                msg = e.getMessage();
+//            }
+//            return error(msg);
+//        }
+//    }
+
     @PostMapping("/login")
     @ResponseBody
     public AjaxResult ajaxLogin(String username, String password, Boolean rememberMe)
     {
-        UsernamePasswordToken token = new UsernamePasswordToken(username, password, rememberMe);
-        Subject subject = SecurityUtils.getSubject();
         try
         {
+            UsernamePasswordToken token = new UsernamePasswordToken(username, RsaUtils.decryptByPrivateKey(password), rememberMe);
+            Subject subject = SecurityUtils.getSubject();
             subject.login(token);
             return success();
         }
-        catch (AuthenticationException e)
+        catch (Exception e)
         {
             String msg = "用户或密码错误";
             if (StringUtils.isNotEmpty(e.getMessage()))
