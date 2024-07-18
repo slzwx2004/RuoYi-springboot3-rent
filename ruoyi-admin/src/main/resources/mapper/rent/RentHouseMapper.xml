@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.rent.mapper.RentHouseMapper">
+    
+    <resultMap type="RentHouse" id="RentHouseResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="address"    column="address"    />
+        <result property="owerId"    column="ower_id"    />
+        <result property="status"    column="status"    />
+    </resultMap>
+
+    <sql id="selectRentHouseVo">
+        select id, name, address, ower_id, status from rent_house
+    </sql>
+
+    <select id="selectRentHouseList" parameterType="RentHouse" resultMap="RentHouseResult">
+        <include refid="selectRentHouseVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="address != null  and address != ''"> and address = #{address}</if>
+            <if test="owerId != null "> and ower_id = #{owerId}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectRentHouseById" parameterType="String" resultMap="RentHouseResult">
+        <include refid="selectRentHouseVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertRentHouse" parameterType="RentHouse">
+        <selectKey keyProperty="id" resultType="string" order="BEFORE">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into rent_house
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="name != null">name,</if>
+            <if test="address != null">address,</if>
+            <if test="owerId != null">ower_id,</if>
+            <if test="status != null">status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="name != null">#{name},</if>
+            <if test="address != null">#{address},</if>
+            <if test="owerId != null">#{owerId},</if>
+            <if test="status != null">#{status},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRentHouse" parameterType="RentHouse">
+        update rent_house
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="owerId != null">ower_id = #{owerId},</if>
+            <if test="status != null">status = #{status},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteRentHouseById" parameterType="String">
+        delete from rent_house where id = #{id}
+    </delete>
+
+    <delete id="deleteRentHouseByIds" parameterType="String">
+        delete from rent_house where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增楼宇管理')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-house-add">
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">名字：</label>
+                    <div class="col-sm-8">
+                        <input name="name" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">地址：</label>
+                    <div class="col-sm-8">
+                        <textarea name="address" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">房东ID：</label>
+                    <div class="col-sm-8">
+                        <input name="owerId" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <label class="col-sm-3 control-label">出租状态：</label>
+            <div class="col-sm-9">
+                <label class="radio-box">
+                    <input type="radio" checked="" value="1" id="optionsRadios1" name="status">出租</label>
+                <label class="radio-box">
+                    <input type="radio" value="0" id="optionsRadios2" name="status">闲置</label>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var prefix = ctx + "rent/house"
+        $("#form-house-add").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/add", $('#form-house-add').serialize());
+            }
+        }
+    </script>
+</body>
+</html>

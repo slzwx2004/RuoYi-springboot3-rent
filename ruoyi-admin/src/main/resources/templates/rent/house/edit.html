@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改楼宇管理')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-house-edit" th:object="${rentHouse}">
+            <input name="id" th:field="*{id}" type="hidden">
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">名字：</label>
+                    <div class="col-sm-8">
+                        <input name="name" th:field="*{name}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">地址：</label>
+                    <div class="col-sm-8">
+                        <textarea name="address" class="form-control">[[*{address}]]</textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">房东ID：</label>
+                    <div class="col-sm-8">
+                        <input name="owerId" th:field="*{owerId}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <label class="col-sm-3 control-label">出租状态：</label>
+            <div class="col-sm-9">
+                <div class="radio-box">
+                    <input type="radio" id="refresh-yes" name="status" value="1" th:field="*{status}">
+                    <label for="refresh-yes">出租</label>
+                </div>
+                <div class="radio-box">
+                    <input type="radio" id="refresh-no" name="status" value="0" th:field="*{status}">
+                    <label for="refresh-no">闲置</label>
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var prefix = ctx + "rent/house";
+        $("#form-house-edit").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-house-edit').serialize());
+            }
+        }
+    </script>
+</body>
+</html>
