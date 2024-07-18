@@ -30,9 +30,19 @@ public class RentHouse extends BaseEntity
     @Excel(name = "房东ID")
     private Long owerId;
 
+    private String owerName = "未知";
+
     /** 状态：1-出租、0-闲置 */
     @Excel(name = "状态：1-出租、0-闲置")
     private String status;
+
+    public String getOwerName() {
+        return owerName;
+    }
+
+    public void setOwerName(String owerName) {
+        this.owerName = owerName;
+    }
 
     public void setId(String id) 
     {

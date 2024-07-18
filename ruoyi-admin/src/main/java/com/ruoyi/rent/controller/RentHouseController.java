@@ -1,6 +1,9 @@
 package com.ruoyi.rent.controller;
 
 import java.util.List;
+
+import com.ruoyi.common.core.domain.entity.SysUser;
+import com.ruoyi.system.service.ISysUserService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,6 +36,8 @@ public class RentHouseController extends BaseController
 
     @Autowired
     private IRentHouseService rentHouseService;
+    @Autowired
+    private ISysUserService userService;
 
     @RequiresPermissions("rent:house:view")
     @GetMapping()
@@ -86,6 +91,7 @@ public class RentHouseController extends BaseController
     @ResponseBody
     public AjaxResult addSave(RentHouse rentHouse)
     {
+        if(rentHouse != null) rentHouse.setOwerId(getUserId());
         return toAjax(rentHouseService.insertRentHouse(rentHouse));
     }
 
@@ -97,6 +103,10 @@ public class RentHouseController extends BaseController
     public String edit(@PathVariable("id") String id, ModelMap mmap)
     {
         RentHouse rentHouse = rentHouseService.selectRentHouseById(id);
+        SysUser sysUser = userService.selectUserById(rentHouse.getOwerId());
+        if(sysUser != null){
+            rentHouse.setOwerName(sysUser.getUserName());
+        }
         mmap.put("rentHouse", rentHouse);
         return prefix + "/edit";
     }
@@ -110,6 +120,10 @@ public class RentHouseController extends BaseController
     @ResponseBody
     public AjaxResult editSave(RentHouse rentHouse)
     {
+        if(rentHouse != null) {
+            RentHouse rentHouseO = rentHouseService.selectRentHouseById(rentHouse.getId());
+            rentHouse.setOwerId(rentHouseO.getOwerId());
+        }
         return toAjax(rentHouseService.updateRentHouse(rentHouse));
     }
 

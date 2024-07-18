@@ -9,6 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="name"    column="name"    />
         <result property="address"    column="address"    />
         <result property="owerId"    column="ower_id"    />
+
         <result property="status"    column="status"    />
     </resultMap>
 
