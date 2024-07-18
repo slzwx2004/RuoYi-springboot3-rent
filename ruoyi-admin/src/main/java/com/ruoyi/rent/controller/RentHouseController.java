@@ -103,10 +103,6 @@ public class RentHouseController extends BaseController
     public String edit(@PathVariable("id") String id, ModelMap mmap)
     {
         RentHouse rentHouse = rentHouseService.selectRentHouseById(id);
-        SysUser sysUser = userService.selectUserById(rentHouse.getOwerId());
-        if(sysUser != null){
-            rentHouse.setOwerName(sysUser.getUserName());
-        }
         mmap.put("rentHouse", rentHouse);
         return prefix + "/edit";
     }

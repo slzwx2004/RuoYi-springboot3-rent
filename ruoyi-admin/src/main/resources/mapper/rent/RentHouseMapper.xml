@@ -9,19 +9,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="name"    column="name"    />
         <result property="address"    column="address"    />
         <result property="owerId"    column="ower_id"    />
-
+        <result property="owerName"    column="ower_name"    />
         <result property="status"    column="status"    />
     </resultMap>
 
     <sql id="selectRentHouseVo">
-        select id, name, address, ower_id, status from rent_house
+        select id, name, address, ower_id, h.status , u.user_name as 'ower_name' from rent_house h LEFT JOIN sys_user u on h.ower_id = u.user_id
     </sql>
 
     <select id="selectRentHouseList" parameterType="RentHouse" resultMap="RentHouseResult">
         <include refid="selectRentHouseVo"/>
         <where>  
             <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
-            <if test="address != null  and address != ''"> and address = #{address}</if>
+            <if test="address != null  and address != ''"> and address like concat('%', #{address}, '%')</if>
             <if test="owerId != null "> and ower_id = #{owerId}</if>
             <if test="status != null  and status != ''"> and status = #{status}</if>
         </where>

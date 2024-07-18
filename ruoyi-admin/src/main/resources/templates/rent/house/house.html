@@ -11,12 +11,12 @@
                     <div class="select-list">
                         <ul>
                             <li>
-                                <label>名字：</label>
+                                <label>楼宇名称：</label>
                                 <input type="text" name="name"/>
                             </li>
                             <li>
-                                <label>房东ID：</label>
-                                <input type="text" name="owerId"/>
+                                <label>楼宇地址：</label>
+                                <input type="text" name="address"/>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -70,15 +70,15 @@
                 },
                 {
                     field: 'name',
-                    title: '名字'
+                    title: '楼宇名称'
                 },
                 {
                     field: 'address',
-                    title: '地址'
+                    title: '楼宇地址'
                 },
                 {
-                    field: 'owerId',
-                    title: '房东ID'
+                    field: 'owerName',
+                    title: '房东'
                 },
                 {
                     field: 'status',
