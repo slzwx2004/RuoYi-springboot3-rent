@@ -36,6 +36,14 @@ public class RentHouse extends BaseEntity
     @Excel(name = "状态：1-出租、0-闲置")
     private String status;
 
+    /** 水表数 */
+    @Excel(name = "水表数")
+    private Long waterNum;
+
+    /** 电表数 */
+    @Excel(name = "电表数")
+    private Long electricPowerNum;
+
     public String getOwerName() {
         return owerName;
     }
@@ -94,6 +102,26 @@ public class RentHouse extends BaseEntity
         return status;
     }
 
+    public void setWaterNum(Long waterNum)
+    {
+        this.waterNum = waterNum;
+    }
+
+    public Long getWaterNum()
+    {
+        return waterNum;
+    }
+
+    public void setElectricPowerNum(Long electricPowerNum)
+    {
+        this.electricPowerNum = electricPowerNum;
+    }
+
+    public Long getElectricPowerNum()
+    {
+        return electricPowerNum;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -101,6 +129,8 @@ public class RentHouse extends BaseEntity
             .append("name", getName())
             .append("address", getAddress())
             .append("owerId", getOwerId())
+            .append("waterNum", getWaterNum())
+            .append("electricPowerNum", getElectricPowerNum())
             .append("status", getStatus())
             .toString();
     }
