@@ -55,6 +55,8 @@ public class RentHouseController extends BaseController
     public TableDataInfo list(RentHouse rentHouse)
     {
         startPage();
+        if(!this.getSysUser().isAdmin() && rentHouse != null)
+            rentHouse.setOwerId(this.getUserId());
         List<RentHouse> list = rentHouseService.selectRentHouseList(rentHouse);
         return getDataTable(list);
     }
@@ -68,6 +70,8 @@ public class RentHouseController extends BaseController
     @ResponseBody
     public AjaxResult export(RentHouse rentHouse)
     {
+        if(!this.getSysUser().isAdmin() && rentHouse != null)
+            rentHouse.setOwerId(this.getUserId());
         List<RentHouse> list = rentHouseService.selectRentHouseList(rentHouse);
         ExcelUtil<RentHouse> util = new ExcelUtil<RentHouse>(RentHouse.class);
         return util.exportExcel(list, "楼宇管理数据");
