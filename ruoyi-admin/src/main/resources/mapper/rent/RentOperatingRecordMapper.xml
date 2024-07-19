@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.rent.mapper.RentOperatingRecordMapper">
+    
+    <resultMap type="RentOperatingRecord" id="RentOperatingRecordResult">
+        <result property="id"    column="rent_operating_record_id"    />
+        <result property="waterNum"    column="water_num"    />
+        <result property="electricPowerNum"    column="electric_power_num"    />
+        <result property="recordTime"    column="record_time"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="houseId"    column="house_id"    />
+        <result property="houseName"    column="house_name"    />
+    </resultMap>
+
+    <sql id="selectRentOperatingRecordVo">
+        select rent_operating_record_id, r.water_num, r.electric_power_num, r.record_time, r.create_time, r.update_time, r.house_id,
+               h.`name` as 'house_name'
+        from rent_operating_record r LEFT JOIN rent_house h on r.house_id = h.id
+    </sql>
+
+    <select id="selectRentOperatingRecordList" parameterType="RentOperatingRecord" resultMap="RentOperatingRecordResult">
+        <include refid="selectRentOperatingRecordVo"/>
+        <where>  
+            <if test="waterNum != null "> and water_num = #{waterNum}</if>
+            <if test="electricPowerNum != null "> and electric_power_num = #{electricPowerNum}</if>
+            <if test="recordTime != null "> and record_time = #{recordTime}</if>
+            <if test="houseId != null  and houseId != ''"> and house_id = #{houseId}</if>
+        </where>
+    </select>
+    
+    <select id="selectRentOperatingRecordById" parameterType="String" resultMap="RentOperatingRecordResult">
+        <include refid="selectRentOperatingRecordVo"/>
+        where rent_operating_record_id = #{id}
+    </select>
+
+    <insert id="insertRentOperatingRecord" parameterType="RentOperatingRecord">
+        <selectKey keyProperty="id" resultType="string" order="BEFORE">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into rent_operating_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">rent_operating_record_id,</if>
+            <if test="waterNum != null">water_num,</if>
+            <if test="electricPowerNum != null">electric_power_num,</if>
+            <if test="recordTime != null">record_time,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="houseId != null">house_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="waterNum != null">#{waterNum},</if>
+            <if test="electricPowerNum != null">#{electricPowerNum},</if>
+            <if test="recordTime != null">#{recordTime},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="houseId != null">#{houseId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRentOperatingRecord" parameterType="RentOperatingRecord">
+        update rent_operating_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="waterNum != null">water_num = #{waterNum},</if>
+            <if test="electricPowerNum != null">electric_power_num = #{electricPowerNum},</if>
+            <if test="recordTime != null">record_time = #{recordTime},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="houseId != null">house_id = #{houseId},</if>
+        </trim>
+        where rent_operating_record_id = #{id}
+    </update>
+
+    <delete id="deleteRentOperatingRecordById" parameterType="String">
+        delete from rent_operating_record where rent_operating_record_id = #{id}
+    </delete>
+
+    <delete id="deleteRentOperatingRecordByIds" parameterType="String">
+        delete from rent_operating_record where rent_operating_record_id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

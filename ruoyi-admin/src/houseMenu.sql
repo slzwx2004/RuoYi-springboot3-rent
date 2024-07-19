@@ -5,6 +5,8 @@ CREATE TABLE `rent_house` (
                               `address` varchar(500) DEFAULT NULL COMMENT '楼宇地址',
                               `ower_id` bigint(20) DEFAULT NULL COMMENT '房东ID',
                               `status` varchar(1) DEFAULT NULL COMMENT '状态：1-出租、0-闲置',
+                              `water_num` int(11) DEFAULT NULL COMMENT '水表数',
+                              `electric_power_num` int(11) DEFAULT NULL COMMENT '电表数',
                               PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='楼宇';
 

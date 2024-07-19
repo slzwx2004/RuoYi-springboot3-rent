@@ -44,6 +44,9 @@ public class RentHouse extends BaseEntity
     @Excel(name = "电表数")
     private Long electricPowerNum;
 
+    /** 楼宇是否选中 默认不存在 */
+    private boolean flag = false;
+
     public String getOwerName() {
         return owerName;
     }
@@ -120,6 +123,14 @@ public class RentHouse extends BaseEntity
     public Long getElectricPowerNum()
     {
         return electricPowerNum;
+    }
+
+    public boolean isFlag() {
+        return flag;
+    }
+
+    public void setFlag(boolean flag) {
+        this.flag = flag;
     }
 
     @Override

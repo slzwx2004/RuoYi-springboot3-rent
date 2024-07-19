@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.rent.mapper.RentOperatingExpensesRecordMapper">
+    
+    <resultMap type="RentOperatingExpensesRecord" id="RentOperatingExpensesRecordResult">
+        <result property="id"    column="id"    />
+        <result property="itemType"    column="item_type"    />
+        <result property="startDate"    column="start_date"    />
+        <result property="endDate"    column="end_date"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="operateId"    column="operate_id"    />
+        <result property="startNum"    column="start_num"    />
+        <result property="endNum"    column="end_num"    />
+    </resultMap>
+
+    <sql id="selectRentOperatingExpensesRecordVo">
+        select id, item_type, start_date, end_date, create_time, update_time, operate_id, start_num, end_num from rent_operating_expenses_record
+    </sql>
+
+    <select id="selectRentOperatingExpensesRecordList" parameterType="RentOperatingExpensesRecord" resultMap="RentOperatingExpensesRecordResult">
+        <include refid="selectRentOperatingExpensesRecordVo"/>
+        <where>  
+            <if test="itemType != null  and itemType != ''"> and item_type = #{itemType}</if>
+            <if test="startDate != null "> and start_date = #{startDate}</if>
+            <if test="endDate != null "> and end_date = #{endDate}</if>
+            <if test="operateId != null  and operateId != ''"> and operate_id = #{operateId}</if>
+            <if test="startNum != null "> and start_num = #{startNum}</if>
+            <if test="endNum != null "> and end_num = #{endNum}</if>
+        </where>
+    </select>
+    
+    <select id="selectRentOperatingExpensesRecordById" parameterType="String" resultMap="RentOperatingExpensesRecordResult">
+        <include refid="selectRentOperatingExpensesRecordVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertRentOperatingExpensesRecord" parameterType="RentOperatingExpensesRecord">
+        <selectKey keyProperty="id" resultType="string" order="BEFORE">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into rent_operating_expenses_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="itemType != null">item_type,</if>
+            <if test="startDate != null">start_date,</if>
+            <if test="endDate != null">end_date,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="operateId != null">operate_id,</if>
+            <if test="startNum != null">start_num,</if>
+            <if test="endNum != null">end_num,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="itemType != null">#{itemType},</if>
+            <if test="startDate != null">#{startDate},</if>
+            <if test="endDate != null">#{endDate},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="operateId != null">#{operateId},</if>
+            <if test="startNum != null">#{startNum},</if>
+            <if test="endNum != null">#{endNum},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRentOperatingExpensesRecord" parameterType="RentOperatingExpensesRecord">
+        update rent_operating_expenses_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="itemType != null">item_type = #{itemType},</if>
+            <if test="startDate != null">start_date = #{startDate},</if>
+            <if test="endDate != null">end_date = #{endDate},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="operateId != null">operate_id = #{operateId},</if>
+            <if test="startNum != null">start_num = #{startNum},</if>
+            <if test="endNum != null">end_num = #{endNum},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteRentOperatingExpensesRecordById" parameterType="String">
+        delete from rent_operating_expenses_record where id = #{id}
+    </delete>
+
+    <delete id="deleteRentOperatingExpensesRecordByIds" parameterType="String">
+        delete from rent_operating_expenses_record where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
