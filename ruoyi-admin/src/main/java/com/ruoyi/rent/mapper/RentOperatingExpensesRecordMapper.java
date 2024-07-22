@@ -58,4 +58,11 @@ public interface RentOperatingExpensesRecordMapper
      * @return 结果
      */
     public int deleteRentOperatingExpensesRecordByIds(String[] ids);
+
+    /**
+     * 根据operateId删除运营费用记录
+     * @param id
+     * @return
+     */
+    public int deleteRentOperatingExpensesRecordByOperateId(String id);
 }

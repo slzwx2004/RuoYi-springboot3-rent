@@ -94,4 +94,9 @@ public class RentOperatingExpensesRecordServiceImpl implements IRentOperatingExp
     {
         return rentOperatingExpensesRecordMapper.deleteRentOperatingExpensesRecordById(id);
     }
+
+    @Override
+    public void deleteRentOperatingExpensesRecordByOperateId(String id) {
+        rentOperatingExpensesRecordMapper.deleteRentOperatingExpensesRecordByOperateId(id);
+    }
 }

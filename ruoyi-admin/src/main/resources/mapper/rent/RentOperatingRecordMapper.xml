@@ -29,6 +29,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="recordTime != null "> and record_time = #{recordTime}</if>
             <if test="houseId != null  and houseId != ''"> and house_id = #{houseId}</if>
         </where>
+        order by record_time desc
     </select>
     
     <select id="selectRentOperatingRecordById" parameterType="String" resultMap="RentOperatingRecordResult">

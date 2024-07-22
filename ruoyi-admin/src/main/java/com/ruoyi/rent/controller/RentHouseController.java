@@ -36,8 +36,6 @@ public class RentHouseController extends BaseController
 
     @Autowired
     private IRentHouseService rentHouseService;
-    @Autowired
-    private ISysUserService userService;
 
     @RequiresPermissions("rent:house:view")
     @GetMapping()

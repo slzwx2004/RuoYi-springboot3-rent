@@ -38,9 +38,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <insert id="insertRentOperatingExpensesRecord" parameterType="RentOperatingExpensesRecord">
-        <selectKey keyProperty="id" resultType="string" order="BEFORE">
-            SELECT LAST_INSERT_ID()
-        </selectKey>
         insert into rent_operating_expenses_record
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
@@ -90,6 +87,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>
+    </delete>
+
+    <delete id="deleteRentOperatingExpensesRecordByOperateId" parameterType="String">
+        delete from rent_operating_expenses_record where operate_id = #{id}
     </delete>
 
 </mapper>

@@ -21,9 +21,8 @@ import java.io.Serializable;
  *     @ColumnComment("主键ID")
  *
  */
-public class SnowFlakeIdGenerator implements IdentifierGenerator {
-    @Override
-    public Serializable generate(SharedSessionContractImplementor sharedSessionContractImplementor, Object o) throws HibernateException {
+public class SnowFlakeIdGenerator {
+    public static String generate() throws HibernateException {
         Snowflake snowflake = IdUtil.getSnowflake(1, 1);
         return snowflake.nextIdStr();
     }

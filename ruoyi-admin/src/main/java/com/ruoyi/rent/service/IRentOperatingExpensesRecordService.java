@@ -58,4 +58,6 @@ public interface IRentOperatingExpensesRecordService
      * @return 结果
      */
     public int deleteRentOperatingExpensesRecordById(String id);
+
+    void deleteRentOperatingExpensesRecordByOperateId(String id);
 }

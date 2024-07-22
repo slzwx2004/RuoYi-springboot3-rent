@@ -2,6 +2,7 @@ package com.ruoyi.rent.domain;
 
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ruoyi.rent.type.OperatingExpensesItemType;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
@@ -21,8 +22,33 @@ public class RentOperatingExpensesRecord extends BaseEntity
     private String id;
 
     /** 费用项目类型，1-水费；2-电费 */
-    @Excel(name = "费用项目类型，1-水费；2-电费")
+//    @Excel(name = "费用项目类型，1-水费；2-电费")
     private String itemType;
+
+    @Excel(name = "费用项目类型，1-水费；2-电费")
+    private String itemTypeString;
+
+    public String getItemTypeString(){
+        //根据 OperatingExpensesItemType 的value，返回对应name
+        if(OperatingExpensesItemType.WARTER_FEE.getValue().equals(itemType)){
+            return OperatingExpensesItemType.WARTER_FEE.getName();
+        }else {
+            return OperatingExpensesItemType.ELECTRICITY_FEE.getName();
+        }
+    }
+
+    @Excel(name = "费用")
+    private String fee;
+
+
+    public Double getFee() {
+        if(endNum == null || startNum == null)  return 0d;
+        if(OperatingExpensesItemType.WARTER_FEE.getValue().equals(itemType)){
+            return OperatingExpensesItemType.WARTER_FEE.getFee()*(endNum - startNum);
+        }else {
+            return OperatingExpensesItemType.ELECTRICITY_FEE.getFee()*(endNum - startNum);
+        }
+    }
 
     /** 开始计算时间 */
     @JsonFormat(pattern = "yyyy-MM-dd")
